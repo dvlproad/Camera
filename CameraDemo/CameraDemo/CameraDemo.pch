@@ -1,0 +1,19 @@
+//
+//  CameraDemo.pch
+//  CameraDemo
+//
+//  Created by lichq on 8/12/15.
+//  Copyright (c) 2015 ciyouzen. All rights reserved.
+//
+
+
+#define RTSP_SERVER_QIAN
+
+#ifdef RTSP_SERVER_QIAN
+    #define RTSP_HOST   @"192.168.18.203"
+    #define RTSP_PORT   @"5554"
+    //#define RTSP_PATH
+#else
+    #define RTSP_HOST   @"192.168.18.203"
+    #define RTSP_PORT   @"5554"
+#endif

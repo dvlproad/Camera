@@ -1,0 +1,11 @@
+platform :ios, '7.0'
+#use_frameworks!
+
+target 'CameraDemo' do
+  pod 'CocoaAsyncSocket', '~> 7.4.1'
+  pod 'MBProgressHUD', '~> 0.9.1'
+end
+
+target 'CameraDemoTests' do
+   
+end

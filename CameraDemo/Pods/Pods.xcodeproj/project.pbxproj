@@ -1,0 +1,600 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0033018AE877CDAD57B7009C /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 621C71767731B664653807AC /* GCDAsyncSocket.h */; };
+		08ACB79A2D88BE82FF5776EB /* Pods-CameraDemo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DD7FFFEAF351381A6F06FE46 /* Pods-CameraDemo-dummy.m */; };
+		1FBE03D081DAB6CDDBAF5101 /* AsyncUdpSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = CEAA14E0C9EB826CA860A4D7 /* AsyncUdpSocket.h */; };
+		2456BFFBF5E47620B5739411 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2875DDD4341DE4A60786DB12 /* Foundation.framework */; };
+		27DFEDC060B213EDAC0E16B8 /* Pods-CameraDemo-MBProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 531BCC98C696F44A72A07DAA /* Pods-CameraDemo-MBProgressHUD-dummy.m */; };
+		36EA43460F63AC7C161098F5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780EAD6434B245ED9FFD9AEF /* CFNetwork.framework */; };
+		3CCA28E2E428BA5770E71D0D /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C050A92580204884B8B794 /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		5673291C84C7E8FBB19AD24E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C41FFD6FB6782485B475491 /* Security.framework */; };
+		5FCEF7FC4BA0876D8CE0B067 /* AsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = F2B26447A497308348F7AEED /* AsyncUdpSocket.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		65A10C8F6FD2CCDD8A346A1E /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E762BAD4C33A7D1770F4B /* GCDAsyncUdpSocket.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		7B9859526B0902A2BA9936CE /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DDBFE5DB84240ABF25A546B /* AsyncSocket.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		8955DEB8CBB5808BA8B511BF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1A8C39B92A2C8F0D534CB6 /* CoreGraphics.framework */; };
+		B44509897C9CDE262F7844B1 /* AsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 63DDCC734379B223FC0C85DA /* AsyncSocket.h */; };
+		BE32231262B5E5C8DF4A2D65 /* Pods-CameraDemo-CocoaAsyncSocket-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B30E87B122DAC9BA5BAB82C /* Pods-CameraDemo-CocoaAsyncSocket-dummy.m */; };
+		C6C04E96F1C5F84522BA96CE /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = DAC730D65B542F8B15ABE523 /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		CF96C081F2066B8228375C32 /* MBProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 506E233A52D9D36DF5232F56 /* MBProgressHUD.h */; };
+		D81425C4561FAD43A4F494AF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2875DDD4341DE4A60786DB12 /* Foundation.framework */; };
+		FBDF048CF192D95DF6004C97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2875DDD4341DE4A60786DB12 /* Foundation.framework */; };
+		FDA4E3F4A5903611981C76A8 /* GCDAsyncUdpSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = BEA5D36E86D36B5D0696C656 /* GCDAsyncUdpSocket.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7F87488972CE832EFC13B5B9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 23E647D92484B591F186F60A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EE0B219E3CE29B0752D6A090;
+			remoteInfo = "Pods-CameraDemo-CocoaAsyncSocket";
+		};
+		E2203DB5C857EFA0FF38C1D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 23E647D92484B591F186F60A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9993BB7D029E99D8FDB5C16E;
+			remoteInfo = "Pods-CameraDemo-MBProgressHUD";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00A38854E1CEC19241E4F912 /* Pods-CameraDemo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CameraDemo-acknowledgements.plist"; sourceTree = "<group>"; };
+		08DB101D6D235C5650C0B923 /* Pods-CameraDemo-MBProgressHUD-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CameraDemo-MBProgressHUD-Private.xcconfig"; sourceTree = "<group>"; };
+		09C26228B4FC6D28748FAC44 /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		2875DDD4341DE4A60786DB12 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		3B30E87B122DAC9BA5BAB82C /* Pods-CameraDemo-CocoaAsyncSocket-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CameraDemo-CocoaAsyncSocket-dummy.m"; sourceTree = "<group>"; };
+		479CEC205E4D840E683FB221 /* Pods-CameraDemo-MBProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CameraDemo-MBProgressHUD-prefix.pch"; sourceTree = "<group>"; };
+		4B1399ED9B1E3801DEF93A87 /* Pods-CameraDemo-CocoaAsyncSocket.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CameraDemo-CocoaAsyncSocket.xcconfig"; sourceTree = "<group>"; };
+		506E233A52D9D36DF5232F56 /* MBProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		531BCC98C696F44A72A07DAA /* Pods-CameraDemo-MBProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CameraDemo-MBProgressHUD-dummy.m"; sourceTree = "<group>"; };
+		5A884DCFD88B68E1361DFC88 /* Pods-CameraDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CameraDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		621C71767731B664653807AC /* GCDAsyncSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = GCD/GCDAsyncSocket.h; sourceTree = "<group>"; };
+		6290BDF6DA53934F91F6AC04 /* libPods-CameraDemo-CocoaAsyncSocket.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CameraDemo-CocoaAsyncSocket.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		63DDCC734379B223FC0C85DA /* AsyncSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AsyncSocket.h; path = RunLoop/AsyncSocket.h; sourceTree = "<group>"; };
+		6F9E762BAD4C33A7D1770F4B /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncUdpSocket.m; path = GCD/GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		7484082CAD4955010AF0AAE6 /* Pods-CameraDemo-CocoaAsyncSocket-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CameraDemo-CocoaAsyncSocket-prefix.pch"; sourceTree = "<group>"; };
+		780EAD6434B245ED9FFD9AEF /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
+		7C41FFD6FB6782485B475491 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		8DDBFE5DB84240ABF25A546B /* AsyncSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AsyncSocket.m; path = RunLoop/AsyncSocket.m; sourceTree = "<group>"; };
+		9126974D9312B9DC420BC334 /* libPods-CameraDemo-MBProgressHUD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CameraDemo-MBProgressHUD.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		958C3969866DEC4859BCC0B6 /* Pods-CameraDemo-environment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CameraDemo-environment.h"; sourceTree = "<group>"; };
+		A4B70DD06DF82044DFABEF77 /* Pods-CameraDemo-CocoaAsyncSocket-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CameraDemo-CocoaAsyncSocket-Private.xcconfig"; sourceTree = "<group>"; };
+		BA1A8C39B92A2C8F0D534CB6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		BC8B44FD80BD6C48357DBF47 /* libPods-CameraDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CameraDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEA5D36E86D36B5D0696C656 /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GCDAsyncUdpSocket.h; path = GCD/GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
+		C2986109DFCAA57ABCF783DD /* Pods-CameraDemo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CameraDemo-resources.sh"; sourceTree = "<group>"; };
+		CE7A7A26B0ABAC5D42AFD32C /* Pods-CameraDemo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CameraDemo-acknowledgements.markdown"; sourceTree = "<group>"; };
+		CEAA14E0C9EB826CA860A4D7 /* AsyncUdpSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AsyncUdpSocket.h; path = RunLoop/AsyncUdpSocket.h; sourceTree = "<group>"; };
+		DAC730D65B542F8B15ABE523 /* MBProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		DD7FFFEAF351381A6F06FE46 /* Pods-CameraDemo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CameraDemo-dummy.m"; sourceTree = "<group>"; };
+		DE652FA2BBC241FC01E2FA8B /* Pods-CameraDemo-MBProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CameraDemo-MBProgressHUD.xcconfig"; sourceTree = "<group>"; };
+		F2B26447A497308348F7AEED /* AsyncUdpSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AsyncUdpSocket.m; path = RunLoop/AsyncUdpSocket.m; sourceTree = "<group>"; };
+		F9C050A92580204884B8B794 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = GCD/GCDAsyncSocket.m; sourceTree = "<group>"; };
+		FB00643218DB0EB6DABD21E8 /* Pods-CameraDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CameraDemo.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		40A9645DB2E929E50F7D2EC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D81425C4561FAD43A4F494AF /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83F764D6552860C5FFE8FFE9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36EA43460F63AC7C161098F5 /* CFNetwork.framework in Frameworks */,
+				FBDF048CF192D95DF6004C97 /* Foundation.framework in Frameworks */,
+				5673291C84C7E8FBB19AD24E /* Security.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A676F87F1ED2B0D1A2C2558D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8955DEB8CBB5808BA8B511BF /* CoreGraphics.framework in Frameworks */,
+				2456BFFBF5E47620B5739411 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0AB4AA8A1CE57E12D7EE2F88 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				780EAD6434B245ED9FFD9AEF /* CFNetwork.framework */,
+				BA1A8C39B92A2C8F0D534CB6 /* CoreGraphics.framework */,
+				2875DDD4341DE4A60786DB12 /* Foundation.framework */,
+				7C41FFD6FB6782485B475491 /* Security.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		2C28027F1EBB206081C79C18 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BC8B44FD80BD6C48357DBF47 /* libPods-CameraDemo.a */,
+				6290BDF6DA53934F91F6AC04 /* libPods-CameraDemo-CocoaAsyncSocket.a */,
+				9126974D9312B9DC420BC334 /* libPods-CameraDemo-MBProgressHUD.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2DB174B8002DBB4CC5F15CFE /* CocoaAsyncSocket */ = {
+			isa = PBXGroup;
+			children = (
+				63DDCC734379B223FC0C85DA /* AsyncSocket.h */,
+				8DDBFE5DB84240ABF25A546B /* AsyncSocket.m */,
+				CEAA14E0C9EB826CA860A4D7 /* AsyncUdpSocket.h */,
+				F2B26447A497308348F7AEED /* AsyncUdpSocket.m */,
+				621C71767731B664653807AC /* GCDAsyncSocket.h */,
+				F9C050A92580204884B8B794 /* GCDAsyncSocket.m */,
+				BEA5D36E86D36B5D0696C656 /* GCDAsyncUdpSocket.h */,
+				6F9E762BAD4C33A7D1770F4B /* GCDAsyncUdpSocket.m */,
+				323046B83974334F9D463936 /* Support Files */,
+			);
+			path = CocoaAsyncSocket;
+			sourceTree = "<group>";
+		};
+		323046B83974334F9D463936 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				4B1399ED9B1E3801DEF93A87 /* Pods-CameraDemo-CocoaAsyncSocket.xcconfig */,
+				A4B70DD06DF82044DFABEF77 /* Pods-CameraDemo-CocoaAsyncSocket-Private.xcconfig */,
+				3B30E87B122DAC9BA5BAB82C /* Pods-CameraDemo-CocoaAsyncSocket-dummy.m */,
+				7484082CAD4955010AF0AAE6 /* Pods-CameraDemo-CocoaAsyncSocket-prefix.pch */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Pods-CameraDemo-CocoaAsyncSocket";
+			sourceTree = "<group>";
+		};
+		7A05789A235660ADCA8A23C1 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				506E233A52D9D36DF5232F56 /* MBProgressHUD.h */,
+				DAC730D65B542F8B15ABE523 /* MBProgressHUD.m */,
+				DE665705BBB3A98D8353DBBF /* Support Files */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		7C79516083E3C40C925626E9 /* Pods-CameraDemo */ = {
+			isa = PBXGroup;
+			children = (
+				CE7A7A26B0ABAC5D42AFD32C /* Pods-CameraDemo-acknowledgements.markdown */,
+				00A38854E1CEC19241E4F912 /* Pods-CameraDemo-acknowledgements.plist */,
+				DD7FFFEAF351381A6F06FE46 /* Pods-CameraDemo-dummy.m */,
+				958C3969866DEC4859BCC0B6 /* Pods-CameraDemo-environment.h */,
+				C2986109DFCAA57ABCF783DD /* Pods-CameraDemo-resources.sh */,
+				5A884DCFD88B68E1361DFC88 /* Pods-CameraDemo.debug.xcconfig */,
+				FB00643218DB0EB6DABD21E8 /* Pods-CameraDemo.release.xcconfig */,
+			);
+			name = "Pods-CameraDemo";
+			path = "Target Support Files/Pods-CameraDemo";
+			sourceTree = "<group>";
+		};
+		8F0CCF65F40F7D593B7D0CAF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0AB4AA8A1CE57E12D7EE2F88 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B2D2E9C3DBD32F8FB8A0C45F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2DB174B8002DBB4CC5F15CFE /* CocoaAsyncSocket */,
+				7A05789A235660ADCA8A23C1 /* MBProgressHUD */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		DE665705BBB3A98D8353DBBF /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				DE652FA2BBC241FC01E2FA8B /* Pods-CameraDemo-MBProgressHUD.xcconfig */,
+				08DB101D6D235C5650C0B923 /* Pods-CameraDemo-MBProgressHUD-Private.xcconfig */,
+				531BCC98C696F44A72A07DAA /* Pods-CameraDemo-MBProgressHUD-dummy.m */,
+				479CEC205E4D840E683FB221 /* Pods-CameraDemo-MBProgressHUD-prefix.pch */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Pods-CameraDemo-MBProgressHUD";
+			sourceTree = "<group>";
+		};
+		F549808F4DC24FD01D2652ED = {
+			isa = PBXGroup;
+			children = (
+				09C26228B4FC6D28748FAC44 /* Podfile */,
+				8F0CCF65F40F7D593B7D0CAF /* Frameworks */,
+				B2D2E9C3DBD32F8FB8A0C45F /* Pods */,
+				2C28027F1EBB206081C79C18 /* Products */,
+				FCCB03C803BA32E8CA95BA1F /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		FCCB03C803BA32E8CA95BA1F /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				7C79516083E3C40C925626E9 /* Pods-CameraDemo */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		705127B935693C82C8141173 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B44509897C9CDE262F7844B1 /* AsyncSocket.h in Headers */,
+				1FBE03D081DAB6CDDBAF5101 /* AsyncUdpSocket.h in Headers */,
+				0033018AE877CDAD57B7009C /* GCDAsyncSocket.h in Headers */,
+				FDA4E3F4A5903611981C76A8 /* GCDAsyncUdpSocket.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A131BF5C83861AD033C03448 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF96C081F2066B8228375C32 /* MBProgressHUD.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		9993BB7D029E99D8FDB5C16E /* Pods-CameraDemo-MBProgressHUD */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6C2936CB4A2D97EAFF4DF7C1 /* Build configuration list for PBXNativeTarget "Pods-CameraDemo-MBProgressHUD" */;
+			buildPhases = (
+				36A865E6F1FA6A510896BD8F /* Sources */,
+				A676F87F1ED2B0D1A2C2558D /* Frameworks */,
+				A131BF5C83861AD033C03448 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-CameraDemo-MBProgressHUD";
+			productName = "Pods-CameraDemo-MBProgressHUD";
+			productReference = 9126974D9312B9DC420BC334 /* libPods-CameraDemo-MBProgressHUD.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		A87BE7E462E9738592092A84 /* Pods-CameraDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DEDED8AE1FF2A80059ED015D /* Build configuration list for PBXNativeTarget "Pods-CameraDemo" */;
+			buildPhases = (
+				BEC063F65099EF756E81365A /* Sources */,
+				40A9645DB2E929E50F7D2EC2 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A14ECF31C25F852EB65008ED /* PBXTargetDependency */,
+				2329F21CC5FF3F192896E65A /* PBXTargetDependency */,
+			);
+			name = "Pods-CameraDemo";
+			productName = "Pods-CameraDemo";
+			productReference = BC8B44FD80BD6C48357DBF47 /* libPods-CameraDemo.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		EE0B219E3CE29B0752D6A090 /* Pods-CameraDemo-CocoaAsyncSocket */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9DFB93A63EF50A7194DA6E78 /* Build configuration list for PBXNativeTarget "Pods-CameraDemo-CocoaAsyncSocket" */;
+			buildPhases = (
+				EED561A1606AB8F01B9720BD /* Sources */,
+				83F764D6552860C5FFE8FFE9 /* Frameworks */,
+				705127B935693C82C8141173 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-CameraDemo-CocoaAsyncSocket";
+			productName = "Pods-CameraDemo-CocoaAsyncSocket";
+			productReference = 6290BDF6DA53934F91F6AC04 /* libPods-CameraDemo-CocoaAsyncSocket.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		23E647D92484B591F186F60A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+			};
+			buildConfigurationList = 4111E58CFC8F075892CDE3B9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F549808F4DC24FD01D2652ED;
+			productRefGroup = 2C28027F1EBB206081C79C18 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A87BE7E462E9738592092A84 /* Pods-CameraDemo */,
+				EE0B219E3CE29B0752D6A090 /* Pods-CameraDemo-CocoaAsyncSocket */,
+				9993BB7D029E99D8FDB5C16E /* Pods-CameraDemo-MBProgressHUD */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		36A865E6F1FA6A510896BD8F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C6C04E96F1C5F84522BA96CE /* MBProgressHUD.m in Sources */,
+				27DFEDC060B213EDAC0E16B8 /* Pods-CameraDemo-MBProgressHUD-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BEC063F65099EF756E81365A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08ACB79A2D88BE82FF5776EB /* Pods-CameraDemo-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EED561A1606AB8F01B9720BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7B9859526B0902A2BA9936CE /* AsyncSocket.m in Sources */,
+				5FCEF7FC4BA0876D8CE0B067 /* AsyncUdpSocket.m in Sources */,
+				3CCA28E2E428BA5770E71D0D /* GCDAsyncSocket.m in Sources */,
+				65A10C8F6FD2CCDD8A346A1E /* GCDAsyncUdpSocket.m in Sources */,
+				BE32231262B5E5C8DF4A2D65 /* Pods-CameraDemo-CocoaAsyncSocket-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2329F21CC5FF3F192896E65A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-CameraDemo-MBProgressHUD";
+			target = 9993BB7D029E99D8FDB5C16E /* Pods-CameraDemo-MBProgressHUD */;
+			targetProxy = E2203DB5C857EFA0FF38C1D7 /* PBXContainerItemProxy */;
+		};
+		A14ECF31C25F852EB65008ED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-CameraDemo-CocoaAsyncSocket";
+			target = EE0B219E3CE29B0752D6A090 /* Pods-CameraDemo-CocoaAsyncSocket */;
+			targetProxy = 7F87488972CE832EFC13B5B9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		271B9ED67EF34EE083A62AFF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A4B70DD06DF82044DFABEF77 /* Pods-CameraDemo-CocoaAsyncSocket-Private.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Pods-CameraDemo-CocoaAsyncSocket/Pods-CameraDemo-CocoaAsyncSocket-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		502707F7B211C3F6E8160CB6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08DB101D6D235C5650C0B923 /* Pods-CameraDemo-MBProgressHUD-Private.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Pods-CameraDemo-MBProgressHUD/Pods-CameraDemo-MBProgressHUD-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		621C8480E92C4181267C3835 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A884DCFD88B68E1361DFC88 /* Pods-CameraDemo.debug.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		66B0CDB23E63E9A74D9AF44D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		691A66388DE5256C5AE87436 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A4B70DD06DF82044DFABEF77 /* Pods-CameraDemo-CocoaAsyncSocket-Private.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Pods-CameraDemo-CocoaAsyncSocket/Pods-CameraDemo-CocoaAsyncSocket-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		7CC28A7913903DF2609EDCBA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB00643218DB0EB6DABD21E8 /* Pods-CameraDemo.release.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		BFF333061B7FFA3E4ADB317D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08DB101D6D235C5650C0B923 /* Pods-CameraDemo-MBProgressHUD-Private.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Pods-CameraDemo-MBProgressHUD/Pods-CameraDemo-MBProgressHUD-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		C709E39C21E09D739F80AE88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "RELEASE=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4111E58CFC8F075892CDE3B9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66B0CDB23E63E9A74D9AF44D /* Debug */,
+				C709E39C21E09D739F80AE88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6C2936CB4A2D97EAFF4DF7C1 /* Build configuration list for PBXNativeTarget "Pods-CameraDemo-MBProgressHUD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				502707F7B211C3F6E8160CB6 /* Debug */,
+				BFF333061B7FFA3E4ADB317D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9DFB93A63EF50A7194DA6E78 /* Build configuration list for PBXNativeTarget "Pods-CameraDemo-CocoaAsyncSocket" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				271B9ED67EF34EE083A62AFF /* Debug */,
+				691A66388DE5256C5AE87436 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DEDED8AE1FF2A80059ED015D /* Build configuration list for PBXNativeTarget "Pods-CameraDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				621C8480E92C4181267C3835 /* Debug */,
+				7CC28A7913903DF2609EDCBA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 23E647D92484B591F186F60A /* Project object */;
+}
