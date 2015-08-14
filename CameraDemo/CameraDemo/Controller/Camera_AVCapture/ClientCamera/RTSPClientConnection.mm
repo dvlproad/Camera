@@ -162,15 +162,7 @@ static void onRTCP(CFSocketRef s,
 
 + (RTSPClientConnection*)setupListener:(NSData*)configData name:(NSString *)name host:(NSString *)host port:(NSString *)port
 {
-//    RTSPClientConnection *obj = [[RTSPClientConnection alloc]init:configData name:name host:host port:port];
-//    if (obj == nil) {
-//        NSLog(@"obj == nil");
-//    }
-    RTSPClientConnection* obj = [RTSPClientConnection alloc];
-    if (![obj init:configData name:name host:host port:port])
-    {
-        return nil;
-    }
+    RTSPClientConnection *obj = [[RTSPClientConnection alloc]init:configData name:name host:host port:port];
     return obj;
 }
 
@@ -215,6 +207,15 @@ static void onRTCP(CFSocketRef s,
     CFRunLoopAddSource(CFRunLoopGetMain(), _rls, kCFRunLoopCommonModes);
     CFRelease(_rls);
     
+    /* //TODO网络连接使用AsyncSocket，参考http://bbs.9ria.com/thread-235907-1-1.html
+    asyncSocket = [[AsyncSocket alloc] initWithDelegate:self];
+    BOOL isSuccess = [asyncSocket connectToHost:host onPort:[port intValue] error:nil];
+    if (isSuccess){
+        NSLog(@"connect error %d", (int) e);
+        return nil;
+    }
+    NSLog(@"connect success");
+    */
     
     [self send_OPTIONS];
     [self readStream];

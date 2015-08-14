@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#include <AsyncSocket.h>
 
 enum CSeqNumber{
     CSeq_OPTIONS = 1,
@@ -22,6 +23,8 @@ enum CSeqNumber{
     NSString *rtsp_host;
     NSString *rtsp_port;
     NSString *rtsp_path;
+    
+    AsyncSocket *asyncSocket;
 }
 @property(nonatomic, assign) BOOL isInitSuccess;
 @property (readwrite, atomic) int bitrate;//add by lichq
