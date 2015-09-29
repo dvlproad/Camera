@@ -9,15 +9,15 @@
 #import <Foundation/Foundation.h>
 #include <AsyncSocket.h>
 
-enum CSeqNumber{
+typedef enum _CSeqNumber{
     CSeq_OPTIONS = 1,
     CSeq_ANNOUNCE,
     CSeq_SETUP_VIDEO,
     CSeq_SETUP_AUDIO,
     CSeq_RECORD
-};
+}CSeqNumber;
 
-@interface RTSPClientConnection : NSObject{
+@interface RTSPClientConnection : NSObject<AsyncSocketDelegate>{
     //    char buffer[1024];
     int sendCount;
     NSString *rtsp_host;
@@ -36,5 +36,6 @@ enum CSeqNumber{
 - (void)onAudioData:(NSData*)data time:(double)pts; //lichq
 - (void)shutdown;
 
++ (BOOL)canConnectToHost:(NSString *)host port:(NSString *)port;
 
 @end

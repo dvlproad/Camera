@@ -20,8 +20,8 @@
 @interface CameraServer : NSObject
 
 + (CameraServer*) server;
-- (void) startup;
-- (void) shutdown;
+- (BOOL)startupEncode;
+- (void)shutdown;
 - (AVCaptureVideoPreviewLayer*) getPreviewLayer;
 
 - (void)startCapture;

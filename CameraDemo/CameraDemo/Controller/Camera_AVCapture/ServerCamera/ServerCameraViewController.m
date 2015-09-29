@@ -19,23 +19,35 @@
 @synthesize cameraView;
 @synthesize serverAddress;
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
+    if (isLive) {
+//        [[CameraServer server] shutdown];
+        
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [[CameraServer server] startup];
-    
-    
     AVCaptureVideoPreviewLayer* preview = [[CameraServer server] getPreviewLayer];
     [preview removeFromSuperlayer];
     preview.frame = self.cameraView.bounds;
-    [[preview connection] setVideoOrientation:UIInterfaceOrientationPortrait];
+    [[preview connection] setVideoOrientation:AVCaptureVideoOrientationPortrait];
     [self.cameraView.layer addSublayer:preview];
+    
+    [[CameraServer server] startupEncode];
+    isLive = YES;
     
     NSString* ipaddr = [IPAddressUtil getIPAddress];
     self.serverAddress.text = [NSString stringWithFormat:@"rtsp://%@/", ipaddr];
 }
-
 
 
 - (IBAction)start_stop:(UIButton *)sender{
@@ -50,11 +62,7 @@
 }
 
 
-
-
-
-
-- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     // this is not the most beautiful animation...
     AVCaptureVideoPreviewLayer* preview = [[CameraServer server] getPreviewLayer];

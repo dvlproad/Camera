@@ -171,9 +171,9 @@ static void onRTCP(CFSocketRef s,
 {
     _configData = configData;
     sendCount = 0;
-    rtsp_host = host; //@"192.168.18.203"
-    rtsp_port = port; //@"5554"
-    rtsp_path = name;   //@"test001"//@"live/test001"
+    rtsp_host = host;
+    rtsp_port = port;
+    rtsp_path = name;
     
     _state = Client_Idle;
     
@@ -197,7 +197,7 @@ static void onRTCP(CFSocketRef s,
     CFSocketError e = CFSocketConnectToAddress(_s, dataAddr, 2);
     CFRelease(dataAddr);
     if (e != kCFSocketSuccess){
-        NSLog(@"connect error %d", (int) e);
+        NSLog(@"错误：无法连接流媒体服务器connect error %d", (int) e);
         return nil;
     }
     NSLog(@"connect success");
@@ -207,7 +207,8 @@ static void onRTCP(CFSocketRef s,
     CFRunLoopAddSource(CFRunLoopGetMain(), _rls, kCFRunLoopCommonModes);
     CFRelease(_rls);
     
-    /* //TODO网络连接使用AsyncSocket，参考http://bbs.9ria.com/thread-235907-1-1.html
+    /*
+    //TODO网络连接使用AsyncSocket，参考http://bbs.9ria.com/thread-235907-1-1.html
     asyncSocket = [[AsyncSocket alloc] initWithDelegate:self];
     BOOL isSuccess = [asyncSocket connectToHost:host onPort:[port intValue] error:nil];
     if (isSuccess){
@@ -215,12 +216,53 @@ static void onRTCP(CFSocketRef s,
         return nil;
     }
     NSLog(@"connect success");
-    */
+    //*/
     
     [self send_OPTIONS];
     [self readStream];
     
     return self;
+}
+
++ (BOOL)canConnectToHost:(NSString *)host port:(NSString *)port{
+    return YES; //TODO找不到方法用于判断当前是否可以连接到流媒体服务器。
+    
+    /* //AsyncSocket方法判断无效，为什么？
+    AsyncSocket *socket = [[AsyncSocket alloc] initWithDelegate:self];
+    BOOL isConnectSuccess = [socket connectToHost:host onPort:[port intValue] withTimeout:2 error:nil];
+    */
+    
+    CFSocketContext info;
+    memset(&info, 0, sizeof(info));
+    info.info = (void*)CFBridgingRetain(self);
+    //    CFSocketContext info = {0, &self, NULL, NULL, NULL};
+    
+    //    _s = CFSocketCreateWithNative(nil, s, kCFSocketDataCallBack, onSocket, &info);
+    CFSocketRef socketRef = CFSocketCreate(kCFAllocatorDefault, PF_INET, SOCK_STREAM, IPPROTO_TCP, kCFSocketWriteCallBack, onSocket, &info);
+    struct sockaddr_in addr;
+    
+    memset(&addr, 0, sizeof(addr));
+    addr.sin_len = sizeof(addr);
+    
+    addr.sin_addr.s_addr = inet_addr([host UTF8String]);
+    
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons([port intValue]);
+    CFDataRef dataAddr = CFDataCreate(kCFAllocatorDefault, (const uint8_t*)&addr, sizeof(addr));
+    CFSocketError e = CFSocketConnectToAddress(socketRef, dataAddr, 2);
+    CFRelease(dataAddr);
+    if (e != kCFSocketSuccess){
+        NSLog(@"connect error %d", (int) e);
+        return NO;
+    }
+    NSLog(@"connect success");
+    
+    
+    CFRunLoopSourceRef runLoopSourceRef = CFSocketCreateRunLoopSource(kCFAllocatorDefault, socketRef, 0);
+    CFRunLoopAddSource(CFRunLoopGetMain(), runLoopSourceRef, kCFRunLoopCommonModes);
+    CFRelease(runLoopSourceRef);
+    
+    return YES;
 }
 
 
@@ -290,6 +332,41 @@ static void onRTCP(CFSocketRef s,
     }
 }
 
+
+- (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag{
+    NSString *bufferString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    if (bufferString.length == 0) {
+        NSLog(@"error: bufferString.length == 0");
+        return;
+    }
+    RTSPMessage* msg = [RTSPMessage createWithString:bufferString];
+    if (msg == nil){
+        return;
+    }
+    
+    
+    int CSeq_res = tag;//或者int CSeq_res = msg.sequence;
+    if (CSeq_res == CSeq_OPTIONS) {
+        [self send_ANNOUNCE];
+        
+    }else if (CSeq_res == CSeq_ANNOUNCE) {
+        [self send_SETUP_Video:@"null"];
+        
+    }else if (CSeq_res == CSeq_SETUP_VIDEO){
+        [self initParams_Video];
+
+        [self send_SETUP_Audio:msg.session];
+        
+    }else if (CSeq_res == CSeq_SETUP_AUDIO){
+        [self initParams_Audido];
+        
+        [self send_RECORD:msg.session];
+        
+    }else if (CSeq_res == CSeq_RECORD){
+        _state = Client_RecordOK;
+    }
+}
+
 /////////////////////////发送信息给服务器////////////////////////
 - (void)sendMessage:(NSString *)stringTosend{
     NSLog(@"开始发送:%@", stringTosend);
@@ -303,6 +380,12 @@ static void onRTCP(CFSocketRef s,
         NSLog(@"发送成功");
     }
     
+}
+
+- (void)sendMessageAndReadRestult:(NSString *)mesg withTag:(NSInteger)tag{
+    NSLog(@"开始发送:%@", mesg);
+    [asyncSocket writeData:[mesg dataUsingEncoding:NSUTF8StringEncoding] withTimeout:3 tag:tag];
+    [asyncSocket readDataWithTimeout:3 tag:tag];
 }
 
 
@@ -332,61 +415,70 @@ static void onRTCP(CFSocketRef s,
 
 
 - (void)send_OPTIONS{
-    NSString *request = [NSString stringWithFormat:@"OPTIONS rtsp://%@:%@/%@ RTSP/1.0\r\nCseq: %d\r\n\r\n", rtsp_host, rtsp_port, rtsp_path, CSeq_OPTIONS];
+    NSMutableString *request = [[NSMutableString alloc] init];
+    [request appendFormat:@"OPTIONS rtsp://%@:%@/%@ RTSP/1.0\r\n", rtsp_host, rtsp_port, rtsp_path];
+    [request appendFormat:@"Cseq: %d\r\n\r\n", CSeq_OPTIONS];
+    
     [self sendMessage:request];
+//    [self sendMessageAndReadRestult:request withTag:CSeq_OPTIONS];
 }
 
 
 - (void)send_ANNOUNCE{
-    NSString *request = [NSString stringWithFormat:@"ANNOUNCE rtsp://%@:%@ RTSP/1.0\r\nCseq: %d\r\n",rtsp_host, rtsp_port, CSeq_ANNOUNCE];
-    //request = [request stringByAppendingString:[NSString stringWithFormat:@"Date: %@", [NSDate date]]];
-    //request = [request stringByAppendingString:[NSString stringWithFormat:@"Session: %@", [NSDate date]]];
-    
-    NSString *Content_Type = @"Content-Type: application/sdp\r\n\r\n";
-    
-    
-    
+    NSMutableString *request = [[NSMutableString alloc] init];
+    [request appendFormat:@"ANNOUNCE rtsp://%@:%@ RTSP/1.0\r\n", rtsp_host, rtsp_port];
+    [request appendFormat:@"Cseq: %d\r\n", CSeq_ANNOUNCE];
+    //[request appendFormat:@"Date: %@", [NSDate date]];
+    //[request appendFormat:@"Session: %@", [NSDate date]];
     NSString *sdp = [NSString stringWithFormat:@"%@\r\n", [self makeSDP_My:_configData]];
-    
-    NSString *Content_Length = [NSString stringWithFormat:@"Content-Length: %d\r\n", sdp.length];
-    request = [request stringByAppendingString:Content_Length];
-    request = [request stringByAppendingString:Content_Type];
-    request = [request stringByAppendingString:sdp];
-    request = [request stringByAppendingString:@"\r\n"];
+    [request appendFormat:@"Content-Length: %d\r\n", sdp.length];
+    [request appendFormat:@"Content-Type: application/sdp\r\n\r\n"];
+    [request appendFormat:@"%@", sdp];
+    [request appendFormat:@"\r\n"];
     
     [self sendMessage:request];
+//    [self sendMessageAndReadRestult:request withTag:CSeq_ANNOUNCE];
 }
 
 - (void)send_SETUP_Video:(NSString *)session{
-    NSString *request = [NSString stringWithFormat:@"SETUP rtsp://%@:%@/trackID=%d RTSP/1.0\r\nCseq: %d\r\n", rtsp_host, rtsp_port, Video_trackID, CSeq_SETUP_VIDEO];//这里设置的通道下面要用到
-    request = [request stringByAppendingString:[NSString stringWithFormat:@"Transport: RTP/AVP/TCP;unicast;interleaved=0-1;mode=record\r\n"]];//这里设置的0-1，下面发送rtp和rtcp的时候要用到
-    request = [request stringByAppendingString:[NSString stringWithFormat:@"Content-Length: 0\r\n"]];
-    request = [request stringByAppendingString:[NSString stringWithFormat:@"Session: %@\r\n", session]];
+    NSMutableString *request = [[NSMutableString alloc] init];
+    [request appendFormat:@"SETUP rtsp://%@:%@/trackID=%d RTSP/1.0\r\n", rtsp_host, rtsp_port, Video_trackID];//这里设置的通道下面要用到
+    [request appendFormat:@"Cseq: %d\r\n", CSeq_SETUP_VIDEO];
+    [request appendFormat:@"Transport: RTP/AVP/TCP;unicast;interleaved=0-1;mode=record\r\n"];//这里设置的0-1，下面发送rtp和rtcp的时候要用到
+    [request appendFormat:@"Content-Length: 0\r\n"];
+    [request appendFormat:@"Session: %@\r\n", session];
+    [request appendFormat:@"\r\n"];
     
-    request = [request stringByAppendingString:@"\r\n"];
     [self sendMessage:request];
+//    [self sendMessageAndReadRestult:request withTag:CSeq_SETUP_VIDEO];
 }
 
 - (void)send_SETUP_Audio:(NSString *)session{
-    NSString *request = [NSString stringWithFormat:@"SETUP rtsp://%@:%@/trackID=%d RTSP/1.0\r\nCseq: %d\r\n", rtsp_host, rtsp_port, Audio_trackID, CSeq_SETUP_AUDIO];
-    request = [request stringByAppendingString:[NSString stringWithFormat:@"Transport: RTP/AVP/TCP;unicast;interleaved=2-3;mode=record\r\n"]];//修改成2-3
-    request = [request stringByAppendingString:[NSString stringWithFormat:@"Content-Length: 0\r\n"]];
-    request = [request stringByAppendingString:[NSString stringWithFormat:@"Session: %@\r\n", session]];
+    NSMutableString *request = [[NSMutableString alloc] init];
+    [request appendFormat:@"SETUP rtsp://%@:%@/trackID=%d RTSP/1.0\r\n", rtsp_host, rtsp_port, Audio_trackID];
+    [request appendFormat:@"Cseq: %d\r\n", CSeq_SETUP_AUDIO];
+    [request appendFormat:@"Transport: RTP/AVP/TCP;unicast;interleaved=2-3;mode=record\r\n"];//修改成2-3
+    [request appendFormat:@"Content-Length: 0\r\n"];
+    [request appendFormat:@"Session: %@\r\n", session];
+    [request stringByAppendingString:@"\r\n"];
     
-    request = [request stringByAppendingString:@"\r\n"];
     [self sendMessage:request];
+//    [self sendMessageAndReadRestult:request withTag:CSeq_SETUP_AUDIO];
 }
 
 
 
 - (void)send_RECORD:(NSString *)session{
-    NSString *request = [NSString stringWithFormat:@"RECORD rtsp://%@:%@ RTSP/1.0\r\nCseq: %d\r\n", rtsp_host, rtsp_port, CSeq_RECORD];
-    request = [request stringByAppendingString:[NSString stringWithFormat:@"Range: npt=0.000-\r\n"]];
-    request = [request stringByAppendingString:[NSString stringWithFormat:@"Content-Length: 0\r\n"]];
-    request = [request stringByAppendingString:[NSString stringWithFormat:@"Session: %@\r\n", session]];
+    NSMutableString *request = [[NSMutableString alloc] init];
+    [request appendFormat:@"RECORD rtsp://%@:%@ RTSP/1.0\r\n", rtsp_host, rtsp_port];
+    [request appendFormat:@"Cseq: %d\r\n", CSeq_RECORD];
+    [request appendFormat:@"Range: npt=0.000-\r\n"];
+    [request appendFormat:@"Content-Length: 0\r\n"];
+    [request appendFormat:@"Session: %@\r\n", session];
+    [request appendFormat:@"\r\n"];
     
-    request = [request stringByAppendingString:@"\r\n"];
     [self sendMessage:request];
+//    [self sendMessageAndReadRestult:request withTag:CSeq_RECORD];
 }
 
 
@@ -414,26 +506,27 @@ static void onRTCP(CFSocketRef s,
     //NSLog(@"........%s", sLocaladdr);
     
     //    NSString* sdp = [NSString stringWithFormat:@"v=0\r\no=- %ld %ld IN IP4 %s\r\ns=Live stream from iOS\r\nc=IN IP4 0.0.0.0\r\nt=0 0\r\na=control:*\r\n", verid, verid, inet_ntoa(localaddr->sin_addr)];
-    NSString* sdp = [NSString stringWithFormat:@"v=0\r\no=- %ld %ld IN IP4 %s\r\n", verid, verid, sLocaladdr];//修改本地地址
-    sdp = [sdp stringByAppendingFormat:@"s=%@\r\nc=IN IP4 %@\r\nt=0 0\r\n", rtsp_path, rtsp_host];  //修改网络地址
-    sdp = [sdp stringByAppendingFormat:@"a=recvonly\r\na=control:*\r\na=range:npt=now-"];
+    NSMutableString *sdp = [[NSMutableString alloc] init];
+    [sdp appendFormat:@"v=0\r\no=- %ld %ld IN IP4 %s\r\n", verid, verid, sLocaladdr];//修改本地地址
+    [sdp appendFormat:@"s=%@\r\nc=IN IP4 %@\r\nt=0 0\r\n", rtsp_path, rtsp_host];  //修改网络地址
+    [sdp appendFormat:@"a=recvonly\r\na=control:*\r\na=range:npt=now-"];
     CFRelease(dlocaladdr);
     
     
     //video
-    sdp = [sdp stringByAppendingString:@"\r\n"];
-    sdp = [sdp stringByAppendingFormat:@"m=video 0 RTP/AVP %d\r\n", Video_Code];
-    sdp = [sdp stringByAppendingFormat:@"a=rtpmap:%d H264/90000\r\n", Video_Code];
-    sdp = [sdp stringByAppendingFormat:@"a=fmtp:%d packetization-mode=1;profile-level-id=%@;sprop-parameter-sets=%@,%@;\r\n", Video_Code, profile_level_id, sps, pps];
-    sdp = [sdp stringByAppendingFormat:@"a=control:trackID=%d", Video_trackID];
+    [sdp appendFormat:@"\r\n"];
+    [sdp appendFormat:@"m=video 0 RTP/AVP %d\r\n", Video_Code];
+    [sdp appendFormat:@"a=rtpmap:%d H264/90000\r\n", Video_Code];
+    [sdp appendFormat:@"a=fmtp:%d packetization-mode=1;profile-level-id=%@;sprop-parameter-sets=%@,%@;\r\n", Video_Code, profile_level_id, sps, pps];
+    [sdp appendFormat:@"a=control:trackID=%d", Video_trackID];
     
     
     //audio
-    sdp = [sdp stringByAppendingString:@"\r\n"];
-    sdp = [sdp stringByAppendingFormat:@"m=audio 5004 RTP/AVP %d\r\n", Audio_Code];
-    sdp = [sdp stringByAppendingFormat:@"a=rtpmap:%d mpeg4-generic/44100\r\n", Audio_Code];
-    sdp = [sdp stringByAppendingFormat:@"a=fmtp:%d streamtype=5; profile-level-id=15; mode=AAC-hbr; config=1208; SizeLength=13; IndexLength=3; IndexDeltaLength=3;\r\n", Audio_Code];//1208
-    sdp = [sdp stringByAppendingFormat:@"a=control:trackID=%d", Audio_trackID];
+    [sdp appendFormat:@"\r\n"];
+    [sdp appendFormat:@"m=audio 5004 RTP/AVP %d\r\n", Audio_Code];
+    [sdp appendFormat:@"a=rtpmap:%d mpeg4-generic/44100\r\n", Audio_Code];
+    [sdp appendFormat:@"a=fmtp:%d streamtype=5; profile-level-id=15; mode=AAC-hbr; config=1208; SizeLength=13; IndexLength=3; IndexDeltaLength=3;\r\n", Audio_Code];//1208
+    [sdp appendFormat:@"a=control:trackID=%d", Audio_trackID];
     
     
     

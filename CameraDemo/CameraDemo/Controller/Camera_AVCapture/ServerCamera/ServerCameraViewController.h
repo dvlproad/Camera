@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ServerCameraViewController : UIViewController{
-    
+    BOOL isLive;
 }
 @property (strong, nonatomic) IBOutlet UIView *cameraView;
 @property (strong, nonatomic) IBOutlet UILabel *serverAddress;

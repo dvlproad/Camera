@@ -28,24 +28,29 @@ static CameraServer* theServer;
 
 @implementation CameraServer
 
-+ (void) initialize
-{
-    // test recommended to avoid duplicate init via subclass
-    if (self == [CameraServer class])
-    {
-        theServer = [[CameraServer alloc] init];
-    }
-}
+//+ (void) initialize
+//{
+//    // test recommended to avoid duplicate init via subclass
+//    if (self == [CameraServer class])
+//    {
+//        theServer = [[CameraServer alloc] init];
+//    }
+//}
 
 + (CameraServer*) server
 {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        theServer = [[self alloc] init];
+        [theServer startup];
+    });
     return theServer;
 }
 
-- (void) startup
+- (BOOL)startup
 {
 #if TARGET_IPHONE_SIMULATOR
-    return;
+    return NO;
 #endif
     
     BOOL isSupportCamera = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
@@ -55,52 +60,64 @@ static CameraServer* theServer;
                                   delegate:nil
                          cancelButtonTitle:NSLocalizedString(@"好的，我知道了", nil)
                          otherButtonTitles:nil] show];
-        return;
+        return NO;
     }
     
     if (_session == nil)
     {
-        NSLog(@"Starting up server");
+        NSLog(@"setting server session");
         
-        NSError *error;
         
         // create capture device with video input
         _session = [[AVCaptureSession alloc] init];
-        AVCaptureDevice* dev = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-        AVCaptureDeviceInput* input = [AVCaptureDeviceInput deviceInputWithDevice:dev error:&error];//模拟器中，input == nil;
-        [_session addInput:input];
-        
-        // create an output for YUV output with self as delegate
-        _captureQueue = dispatch_queue_create("uk.co.gdcl.avencoder.capture", DISPATCH_QUEUE_SERIAL);
-        _output = [[AVCaptureVideoDataOutput alloc] init];
-        [_output setSampleBufferDelegate:self queue:_captureQueue];
-        NSDictionary* setcapSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        [NSNumber numberWithInt:kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange], kCVPixelBufferPixelFormatTypeKey,
-                                        nil];
-        _output.videoSettings = setcapSettings;
-        [_session addOutput:_output];
-        
-        // create an encoder
-        _encoder = [AVEncoder encoderForHeight:480 andWidth:720];
-        [_encoder encodeWithBlock:^int(NSArray* data, double pts) {
-            if (_rtsp != nil)
-            {
-                _rtsp.bitrate = _encoder.bitspersecond;
-                [_rtsp onVideoData:data time:pts];
-            }
-            return 0;
-        } onParams:^int(NSData *data) {
-            _rtsp = [RTSPServer setupListener:data];
-            return 0;
-        }];
-        
-        // start capture and a preview layer
-//        [_session startRunning];
-        
-        
+        [self setupVideoCapture];
         _preview = [AVCaptureVideoPreviewLayer layerWithSession:_session];
         _preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
     }
+    return YES;
+}
+
+- (void)setupVideoCapture{
+    // create capture device with video input
+    AVCaptureDevice* dev = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    AVCaptureDeviceInput* input = [AVCaptureDeviceInput deviceInputWithDevice:dev error:nil];
+    [_session addInput:input];
+    
+    
+    // create an output for YUV output with self as delegate
+    _captureQueue = dispatch_queue_create("uk.co.gdcl.avencoder.capture", DISPATCH_QUEUE_SERIAL);
+    _output = [[AVCaptureVideoDataOutput alloc] init];
+    [_output setSampleBufferDelegate:self queue:_captureQueue];
+    NSDictionary* setcapSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithInt:kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange], kCVPixelBufferPixelFormatTypeKey,
+                                    nil];
+    //[_output setAlwaysDiscardsLateVideoFrames:YES];//lichq
+    
+    _output.videoSettings = setcapSettings;
+    [_session addOutput:_output];
+}
+
+- (BOOL)startupEncode{
+    if (_session == nil){
+        NSLog(@"错误：_session == nil.请查看之前是否忘记执行startup");
+        return NO;
+    }
+    
+    // create an encoder
+    _encoder = [AVEncoder encoderForHeight:480 andWidth:720];
+    [_encoder encodeWithBlock:^int(NSArray* data, double pts) {
+        if (_rtsp != nil)
+        {
+            _rtsp.bitrate = _encoder.bitspersecond;
+            [_rtsp onVideoData:data time:pts];
+        }
+        return 0;
+    } onParams:^int(NSData *data) {
+        _rtsp = [RTSPServer setupListener:data];
+        return 0;
+    }];
+    
+    return YES;
 }
 
 - (void)startCapture{

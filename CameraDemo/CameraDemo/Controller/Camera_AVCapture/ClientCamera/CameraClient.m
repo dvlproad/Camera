@@ -19,7 +19,7 @@
 
 static CameraClient *theClient;
 
-@interface CameraClient  () <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate>
+@interface CameraClient  () <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate, AsyncSocketDelegate>
 {
     AVCaptureSession* _session;
     AVCaptureVideoPreviewLayer* _preview;
@@ -96,37 +96,51 @@ static CameraClient *theClient;
     return YES;
 }
 
+- (void)onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port{
+    NSLog(@"lllll");
+}
+
 - (BOOL)startupEncode:(NSString *)name host:(NSString *)host port:(NSString *)port
 {
-    if (_session == nil)
-    {
-        NSLog(@"Starting up client encode");
-        
-        // create an encoder
-        _encoder = [AVEncoder encoderForHeight:480 andWidth:720];   //视频编码
-        [_encoder encodeWithBlock:^int(NSArray* data, double pts) {
-            if (_rtspClient != nil)
-            {
-                NSLog(@"发送中....");
-                _rtspClient.bitrate = _encoder.bitspersecond;
-                [_rtspClient onVideoData:data time:pts];
-            }else{
-                NSLog(@"error: _rtspClient == nil. 不进行发送");
-            }
-            return 0;
-        } onParams:^int(NSData *data) {
-            _rtspClient = [RTSPClientConnection setupListener:data name:name host:host port:port];
-            if (_rtspClient == nil) {
-                NSLog(@"clent初始化失败，无法发送error: _rtspClient == nil");
-                return NO;
-            }
-            return 0;
-        }];
-        
-        
-        _aacEncoder = [[AACEncoder alloc] init];    //音频编码
+    if (_session == nil){
+        NSLog(@"错误：_session == nil.请查看之前是否忘记执行startupCapture");
+        return NO;
     }
     
+    /*
+    BOOL isConnectSuccess = [RTSPClientConnection canConnectToHost:host port:port];
+    if (!isConnectSuccess){
+        NSLog(@"错误：connect server error, 无法连接到流媒体服务器，请检查");
+        return NO;
+    }
+
+    NSLog(@"can connect to server:rtsp://%@:%@. now begin startup client encode", host, port);//开始设置编码器
+    */
+    
+    // create an encoder
+    _encoder = [AVEncoder encoderForHeight:480 andWidth:720];   //视频编码
+    [_encoder encodeWithBlock:^int(NSArray* data, double pts) {
+        if (_rtspClient != nil)
+        {
+            NSLog(@"发送中....");
+            _rtspClient.bitrate = _encoder.bitspersecond;
+            [_rtspClient onVideoData:data time:pts];
+        }else{
+            NSLog(@"error: _rtspClient == nil. 不进行发送");
+        }
+        return 0;
+    } onParams:^int(NSData *data) {
+        _rtspClient = [RTSPClientConnection setupListener:data name:name host:host port:port];
+        if (_rtspClient == nil) {
+            NSLog(@"clent初始化失败，无法发送error: _rtspClient == nil");
+            return NO;
+        }
+        return 0;
+    }];
+    
+    
+    _aacEncoder = [[AACEncoder alloc] init];    //音频编码
+
     return YES;
 }
 
@@ -221,9 +235,9 @@ static CameraClient *theClient;
     }
 }
 
-- (void) shutdown
+- (void)shutdown
 {
-    NSLog(@"shutting down server");
+    NSLog(@"shutting down client");
     if (_session)
     {
         [_session stopRunning];

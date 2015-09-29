@@ -12,8 +12,8 @@
 #ifdef RTSP_SERVER_QIAN
     #define RTSP_HOST   @"192.168.18.203"
     #define RTSP_PORT   @"5554"
-    //#define RTSP_PATH
-#else
-    #define RTSP_HOST   @"192.168.18.203"
-    #define RTSP_PORT   @"5554"
+    //#define RTSP_PATH @"test001"//@"live/test001"
+#else   //公网
+    #define RTSP_HOST   @"117.27.157.178"
+    #define RTSP_PORT   @"3554"
 #endif

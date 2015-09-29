@@ -47,6 +47,20 @@
     [HUD show:YES];
 }
 
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
+    //错误：[AVAssetWriter finishWritingWithCompletionHandler:] Cannot call method when status is 0'
+//    [[CameraClient client] shutdown];//一定要记得shutdown.
+    if (isLive) {
+        [self stopLive];
+    }
+}
+
+- (void)stopLive{
+    
+}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -55,20 +69,6 @@
     // Remove HUD from screen when the HUD was hidded
     [hud removeFromSuperview];
     hud = nil;
-}
-
-
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-    
-    if (isLive) {
-        [[CameraClient client] shutdown];
-    }
-    [self stopLive];
-}
-
-- (void)stopLive{
-    
 }
 
 - (void)goOK:(PopupTextFieldInput *)popupTextFieldInput{
@@ -91,10 +91,7 @@
     NSArray *array2 = [array[0] componentsSeparatedByString:@":"];
     NSString *rtsp_host = array2[0];
     NSString *rtsp_port = array2[1];
-    NSString *rtsp_path = @"";
-    for (int i = 1; i < array.count; i++) { //从第一位开始
-        rtsp_path = [rtsp_path stringByAppendingFormat:@"%@", array[i]];
-    }
+    NSString *rtsp_path = [array lastObject];
     [self doLivePUT_host:rtsp_host port:rtsp_port name:rtsp_path];
 }
 
@@ -125,16 +122,8 @@
     AVCaptureVideoPreviewLayer* preview = [[CameraClient client] getPreviewLayer];
     [preview removeFromSuperlayer];
     preview.frame = self.cameraView.bounds;
-    [[preview connection] setVideoOrientation:UIInterfaceOrientationPortrait];
+    [[preview connection] setVideoOrientation:AVCaptureVideoOrientationPortrait];
     [self.cameraView.layer addSublayer:preview];
-}
-
-- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    // this is not the most beautiful animation...
-    AVCaptureVideoPreviewLayer* preview = [[CameraClient client] getPreviewLayer];
-    preview.frame = self.cameraView.bounds;
-    [[preview connection] setVideoOrientation:toInterfaceOrientation];
 }
 
 
