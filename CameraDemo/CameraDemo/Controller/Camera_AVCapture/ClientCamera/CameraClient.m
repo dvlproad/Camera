@@ -22,14 +22,18 @@ static CameraClient *theClient;
 @interface CameraClient  () <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate, AsyncSocketDelegate>
 {
     AVCaptureSession* _session;
-    AVCaptureVideoPreviewLayer* _preview;
-    AVCaptureVideoDataOutput* _output;
-    AVCaptureAudioDataOutput* _audioOutput;
-    dispatch_queue_t _captureQueue;
-    dispatch_queue_t _audioQueue;
-    AVCaptureConnection* _audioConnection;
+    AVCaptureVideoPreviewLayer *_previewLayer;
     
-    AVEncoder* _encoder;
+    AVCaptureVideoDataOutput* _videoOutput;
+    AVCaptureAudioDataOutput* _audioOutput;
+    
+    dispatch_queue_t _videoQueue;
+    dispatch_queue_t _audioQueue;
+    
+    AVCaptureConnection *_videoConnection;
+    AVCaptureConnection *_audioConnection;
+    
+    AVEncoder* _h264Encoder;
     
     //    RTSPServer* _rtsp;
     RTSPClientConnection *_rtspClient;
@@ -90,8 +94,7 @@ static CameraClient *theClient;
         _session = [[AVCaptureSession alloc] init];
         [self setupVideoCapture];
         [self setupAudioCapture];
-        _preview = [AVCaptureVideoPreviewLayer layerWithSession:_session];
-        _preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        [self setupPreviewLayer];
     }
     return YES;
 }
@@ -118,12 +121,12 @@ static CameraClient *theClient;
     */
     
     // create an encoder
-    _encoder = [AVEncoder encoderForHeight:480 andWidth:720];   //视频编码
-    [_encoder encodeWithBlock:^int(NSArray* data, double pts) {
+    _h264Encoder = [AVEncoder encoderForHeight:480 andWidth:720];   //视频编码
+    [_h264Encoder encodeWithBlock:^int(NSArray* data, double pts) {
         if (_rtspClient != nil)
         {
             NSLog(@"发送中....");
-            _rtspClient.bitrate = _encoder.bitspersecond;
+            _rtspClient.bitrate = _h264Encoder.bitspersecond;
             [_rtspClient onVideoData:data time:pts];
         }else{
             NSLog(@"error: _rtspClient == nil. 不进行发送");
@@ -144,25 +147,37 @@ static CameraClient *theClient;
     return YES;
 }
 
-
+/**
+ *  设置视频Video的采集输入和采集输出
+ */
 - (void)setupVideoCapture{
-    // create capture device with video input
-    AVCaptureDevice* dev = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    AVCaptureDeviceInput* input = [AVCaptureDeviceInput deviceInputWithDevice:dev error:nil];
-    [_session addInput:input];
+    /* 配置视频Video的采集输入源（摄像头） */
+    NSError *error = nil;
+    AVCaptureDevice *dev = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    AVCaptureDeviceInput *videoInput = [AVCaptureDeviceInput deviceInputWithDevice:dev error:&error];
+    if (error) {
+        NSLog(@"Error: getting video input device: %@", error.description);
+    }
+    [_session addInput:videoInput];
     
     
-    // create an output for YUV output with self as delegate
-    _captureQueue = dispatch_queue_create("uk.co.gdcl.avencoder.capture", DISPATCH_QUEUE_SERIAL);
-    _output = [[AVCaptureVideoDataOutput alloc] init];
-    [_output setSampleBufferDelegate:self queue:_captureQueue];
-    NSDictionary* setcapSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    [NSNumber numberWithInt:kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange], kCVPixelBufferPixelFormatTypeKey,
-                                    nil];
-    //[_output setAlwaysDiscardsLateVideoFrames:YES];//lichq
+    /* 配置视频Video的采集输出 */
+    _videoQueue = dispatch_queue_create("uk.co.gdcl.avencoder.capture", DISPATCH_QUEUE_SERIAL);
+    _videoOutput = [[AVCaptureVideoDataOutput alloc] init];
+    [_videoOutput setSampleBufferDelegate:self queue:_videoQueue];
     
-    _output.videoSettings = setcapSettings;
-    [_session addOutput:_output];
+    //配置输出视频图像格式
+    NSString *formatTypeKey = (NSString *)kCVPixelBufferPixelFormatTypeKey;
+    NSNumber *formatType = @(kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange);
+    NSDictionary *videoSettings = @{formatTypeKey: formatType};
+    _videoOutput.videoSettings = videoSettings;
+    
+    //_output.alwaysDiscardsLateVideoFrames = YES;
+    
+    [_session addOutput:_videoOutput];
+    
+    // 保存Connection，用于在SampleBufferDelegate中判断数据来源（是Video/Audio？）
+    _videoConnection = [_videoOutput connectionWithMediaType:AVMediaTypeVideo];
 }
 
 - (void)setupAudioCapture{
@@ -191,13 +206,19 @@ static CameraClient *theClient;
     _audioConnection = [_audioOutput connectionWithMediaType:AVMediaTypeAudio];
 }
 
+- (void)setupPreviewLayer {
+    _previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:_session];
+    _previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;//设置预览时的视频缩放方式
+    //设置视频的朝向
+}
+
 - (AVCaptureVideoPreviewLayer *)getPreviewLayer
 {
-    if (_preview == nil) {
+    if (_previewLayer == nil) {
         NSLog(@"_preview == nil, 请检查是否未初始化");
         [[[UIAlertView alloc]initWithTitle:@"发生错误" message:@"_preview == nil, 请检查是否未初始化" delegate:nil cancelButtonTitle:@"好的，我知道了" otherButtonTitles:nil] show];
     }
-    return _preview;
+    return _previewLayer;
 }
 
 - (void)startCapture{
@@ -214,13 +235,17 @@ static CameraClient *theClient;
 
 
 
-
+#pragma mark - AVCaptureOutput 中的 AVCaptureVideoDataOutputSampleBufferDelegate （AVCaptureVideoDataOutput 和 AVCaptureAudioDataOutput 都是 AVCaptureOutput 的子类，委托是通过 -setSampleBufferDelegate: queue: 设置的）
 - (void) captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
     // pass frame to encoder
-    if (captureOutput == _output) {
-        [_encoder encodeFrame:sampleBuffer];
+    if (captureOutput == _videoOutput) {
+        NSLog(@"在这里获得video sampleBuffer，做进一步处理（编码H.264）");
+        [_h264Encoder encodeFrame:sampleBuffer];
+        
     }else if (captureOutput == _audioOutput){
+        NSLog(@"这里获得audio sampleBuffer，做进一步处理（编码AAC）");
+        
         CMTime pts = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
         double dPTS = (double)(pts.value) / pts.timescale;
         [_aacEncoder encodeSampleBuffer:sampleBuffer completionBlock:^(NSData *encodedData, NSError *error) {
@@ -251,9 +276,10 @@ static CameraClient *theClient;
     {
         [_rtspClient shutdown];
     }
-    if (_encoder)
+    
+    if (_h264Encoder)
     {
-        [ _encoder shutdown];
+        [ _h264Encoder shutdown];
     }
 }
 
