@@ -17,7 +17,7 @@
 
 //顺序参照：http://liwpk.blog.163.com/blog/static/3632617020134325021136/
 #pragma mark - ①、创建要使用的对象initialSession
-- (instancetype)init{
+- (instancetype)init {
     self = [super init];
     if (self) {
         [self initialSession];
@@ -25,7 +25,7 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder{
+- (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self initialSession];
@@ -33,7 +33,7 @@
     return self;
 }
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         [self initialSession];
@@ -47,17 +47,19 @@
 //附：当要对视频进行实时处理时，需要使用的输出对象是 AVCaptureVideoDataOutput, 因为我们进行实时处理时，是要直接对camera buffer中的视频流进行处理。所以我们需要定义的是一个"视频数据输出对象"(AVCaptureVideoDataOutput),而不是其他对象,并将其添加到session上。AVCaptureSession，当录制开始后，可以控制调用相关回调来取音视频的每一贞数据。
 - (void)initialSession
 {
+    return;
+    
     /*
      1、输入设备对象的创建（种类有：
      ①AVMediaTypeVideo
      ②AVMediaTypeAudio
      */
     AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    self.videoInput = [[AVCaptureDeviceInput alloc]initWithDevice:videoDevice error:nil];
+    self.videoInput = [[AVCaptureDeviceInput alloc] initWithDevice:videoDevice error:nil];
     //self.videoInput = [AVCaptureDeviceInput deviceInputWithDevice:device error:nil];
     
-    NSError * error;
-    AVCaptureDevice * audioDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
+    NSError *error;
+    AVCaptureDevice *audioDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
     self.audioInput = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:&error];
     
     /*

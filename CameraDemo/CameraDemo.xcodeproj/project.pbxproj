@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3D7E265E8AACB138FA2AF7BE /* libPods-CameraDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4EFCDFDD41AE6BA2DFD9D37 /* libPods-CameraDemo.a */; };
+		78DA0ABE1E559D97001425EF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DA0ABD1E559D97001425EF /* AVFoundation.framework */; };
+		78DA0AC21E55ABED001425EF /* UIImagePickerControllerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DA0AC11E55ABED001425EF /* UIImagePickerControllerUtil.m */; };
 		808CBBDD1B74BB6500EDFFB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 808CBBDC1B74BB6500EDFFB9 /* main.m */; };
 		808CBBE01B74BB6500EDFFB9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 808CBBDF1B74BB6500EDFFB9 /* AppDelegate.m */; };
 		808CBBE31B74BB6500EDFFB9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808CBBE21B74BB6500EDFFB9 /* ViewController.m */; };
@@ -54,6 +56,9 @@
 
 /* Begin PBXFileReference section */
 		443C349BC004722484BF33D8 /* Pods-CameraDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CameraDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CameraDemo/Pods-CameraDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		78DA0ABD1E559D97001425EF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		78DA0AC01E55ABED001425EF /* UIImagePickerControllerUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImagePickerControllerUtil.h; sourceTree = "<group>"; };
+		78DA0AC11E55ABED001425EF /* UIImagePickerControllerUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImagePickerControllerUtil.m; sourceTree = "<group>"; };
 		808CBBD71B74BB6500EDFFB9 /* CameraDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CameraDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		808CBBDB1B74BB6500EDFFB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		808CBBDC1B74BB6500EDFFB9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -122,6 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78DA0ABE1E559D97001425EF /* AVFoundation.framework in Frameworks */,
 				3D7E265E8AACB138FA2AF7BE /* libPods-CameraDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -136,6 +142,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		78DA0ABF1E55ABD4001425EF /* UIImagePickerControllerUtil */ = {
+			isa = PBXGroup;
+			children = (
+				78DA0AC01E55ABED001425EF /* UIImagePickerControllerUtil.h */,
+				78DA0AC11E55ABED001425EF /* UIImagePickerControllerUtil.m */,
+			);
+			name = UIImagePickerControllerUtil;
+			path = ../../UIImagePickerControllerUtil;
+			sourceTree = "<group>";
+		};
 		808CBBCE1B74BB6500EDFFB9 = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +177,7 @@
 			children = (
 				808CBBDE1B74BB6500EDFFB9 /* AppDelegate.h */,
 				808CBBDF1B74BB6500EDFFB9 /* AppDelegate.m */,
+				78DA0ABF1E55ABD4001425EF /* UIImagePickerControllerUtil */,
 				808CBBE11B74BB6500EDFFB9 /* ViewController.h */,
 				808CBBE21B74BB6500EDFFB9 /* ViewController.m */,
 				808CBBE41B74BB6500EDFFB9 /* Main.storyboard */,
@@ -327,6 +344,7 @@
 		D6934B000A760CAFD7B81145 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				78DA0ABD1E559D97001425EF /* AVFoundation.framework */,
 				E4EFCDFDD41AE6BA2DFD9D37 /* libPods-CameraDemo.a */,
 			);
 			name = Frameworks;
@@ -378,11 +396,13 @@
 		808CBBCF1B74BB6500EDFFB9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = ciyouzen;
 				TargetAttributes = {
 					808CBBD61B74BB6500EDFFB9 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = K236FB7WP6;
+						ProvisioningStyle = Automatic;
 					};
 					808CBBEF1B74BB6500EDFFB9 = {
 						CreatedOnToolsVersion = 6.4;
@@ -481,6 +501,7 @@
 				808CBC3A1B74BCD500EDFFB9 /* MP4Atom.m in Sources */,
 				808CBC301B74BCD500EDFFB9 /* CameraClient.m in Sources */,
 				808CBBE31B74BB6500EDFFB9 /* ViewController.m in Sources */,
+				78DA0AC21E55ABED001425EF /* UIImagePickerControllerUtil.m in Sources */,
 				808CBC401B74BCD500EDFFB9 /* RTSPServer.m in Sources */,
 				808CBC3B1B74BCD500EDFFB9 /* NALUnit.cpp in Sources */,
 				808CBBE01B74BB6500EDFFB9 /* AppDelegate.m in Sources */,
@@ -549,14 +570,17 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -592,8 +616,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -621,12 +647,15 @@
 			baseConfigurationReference = 443C349BC004722484BF33D8 /* Pods-CameraDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = K236FB7WP6;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/CameraDemo/CameraDemo.pch";
 				INFOPLIST_FILE = CameraDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.health.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "28919571-454a-43cd-9fa2-36fa90b0f367";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -635,12 +664,15 @@
 			baseConfigurationReference = DE31722BBCCD37250308813A /* Pods-CameraDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = K236FB7WP6;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/CameraDemo/CameraDemo.pch";
 				INFOPLIST_FILE = CameraDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.health.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "28919571-454a-43cd-9fa2-36fa90b0f367";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -658,6 +690,7 @@
 				);
 				INFOPLIST_FILE = CameraDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ciyouzen.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CameraDemo.app/CameraDemo";
 			};
@@ -673,6 +706,7 @@
 				);
 				INFOPLIST_FILE = CameraDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ciyouzen.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CameraDemo.app/CameraDemo";
 			};

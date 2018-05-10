@@ -15,7 +15,7 @@ static CameraServer* theServer;
 @interface CameraServer  () <AVCaptureVideoDataOutputSampleBufferDelegate>
 {
     AVCaptureSession* _session;
-    AVCaptureVideoPreviewLayer* _preview;
+    AVCaptureVideoPreviewLayer* _previewLayer;
     AVCaptureVideoDataOutput* _output;
     dispatch_queue_t _captureQueue;
     
@@ -51,7 +51,7 @@ static CameraServer* theServer;
 {
 #if TARGET_IPHONE_SIMULATOR
     return NO;
-#endif
+#else
     
     BOOL isSupportCamera = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
     if (isSupportCamera == NO) {
@@ -71,10 +71,9 @@ static CameraServer* theServer;
         // create capture device with video input
         _session = [[AVCaptureSession alloc] init];
         [self setupVideoCapture];
-        _preview = [AVCaptureVideoPreviewLayer layerWithSession:_session];
-        _preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
     }
     return YES;
+#endif
 }
 
 - (void)setupVideoCapture{
@@ -158,13 +157,19 @@ static CameraServer* theServer;
 }
 
 
-- (AVCaptureVideoPreviewLayer*) getPreviewLayer
+- (AVCaptureVideoPreviewLayer *)getPreviewLayer
 {
-    if (_preview == nil) {
-        NSLog(@"_preview == nil, 请检查是否未初始化");
-        [[[UIAlertView alloc]initWithTitle:@"发生错误" message:@"_preview == nil, 请检查是否未初始化" delegate:nil cancelButtonTitle:@"好的，我知道了" otherButtonTitles:nil] show];
+#if TARGET_IPHONE_SIMULATOR
+    return nil;
+#else
+    if (_previewLayer == nil) {
+        NSAssert(_session != nil, @"_session 不能为空");
+        
+        _previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:_session];
+        _previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     }
-    return _preview;
+    return _previewLayer;
+#endif
 }
 
 @end

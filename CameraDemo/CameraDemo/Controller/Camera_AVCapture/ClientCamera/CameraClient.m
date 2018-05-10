@@ -12,8 +12,7 @@
 
 #import "RTSPClientConnection.h" //add by lichq
 
-
-#import "AVFoundation/AVAudioSettings.h"//lichq
+#import <AVFoundation/AVAudioSettings.h>
 
 
 
@@ -73,7 +72,7 @@ static CameraClient *theClient;
 - (BOOL)startupCapture{
 #if TARGET_IPHONE_SIMULATOR
     return NO;
-#endif
+#else
     
     BOOL isSupportCamera = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
     if (isSupportCamera == NO) {
@@ -94,9 +93,9 @@ static CameraClient *theClient;
         _session = [[AVCaptureSession alloc] init];
         [self setupVideoCapture];
         [self setupAudioCapture];
-        [self setupPreviewLayer];
     }
     return YES;
+#endif
 }
 
 - (void)onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port{
@@ -206,19 +205,20 @@ static CameraClient *theClient;
     _audioConnection = [_audioOutput connectionWithMediaType:AVMediaTypeAudio];
 }
 
-- (void)setupPreviewLayer {
-    _previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:_session];
-    _previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;//设置预览时的视频缩放方式
-    //设置视频的朝向
-}
-
 - (AVCaptureVideoPreviewLayer *)getPreviewLayer
 {
+#if TARGET_IPHONE_SIMULATOR
+    return nil;
+#else
     if (_previewLayer == nil) {
-        NSLog(@"_preview == nil, 请检查是否未初始化");
-        [[[UIAlertView alloc]initWithTitle:@"发生错误" message:@"_preview == nil, 请检查是否未初始化" delegate:nil cancelButtonTitle:@"好的，我知道了" otherButtonTitles:nil] show];
+        NSAssert(_session != nil, @"_session 不能为空");
+        
+        _previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:_session];
+        _previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;//设置预览时的视频缩放方式
+        //设置视频的朝向
     }
     return _previewLayer;
+#endif
 }
 
 - (void)startCapture{

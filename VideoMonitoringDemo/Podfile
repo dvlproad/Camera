@@ -1,0 +1,11 @@
+platform :ios, '7.0'
+#use_frameworks!
+
+target 'VideoMonitoringDemo' do
+    pod 'CJBaseUIKit/UIColor+CJCategory', '~> 0.0.9'
+#    pod 'CJBaseScrollView/CJTableView', '~> 0.0.6'
+end
+
+target 'VideoMonitoringDemoTests' do
+    
+end

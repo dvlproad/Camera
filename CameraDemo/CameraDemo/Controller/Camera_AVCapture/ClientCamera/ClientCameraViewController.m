@@ -119,12 +119,12 @@
     [super viewDidLoad];
     
     /* 将当前硬件采集视频图像显示到屏幕 */
-    AVCaptureVideoPreviewLayer*preview = [[CameraClient client] getPreviewLayer];
-    [preview removeFromSuperlayer];
-    preview.frame = self.cameraView.bounds;
+    AVCaptureVideoPreviewLayer *previewLayer = [[CameraClient client] getPreviewLayer];
+    [previewLayer removeFromSuperlayer];
+    previewLayer.frame = self.cameraView.bounds;
     
-    [[preview connection] setVideoOrientation:AVCaptureVideoOrientationPortrait];
-    [self.cameraView.layer addSublayer:preview];
+    [[previewLayer connection] setVideoOrientation:AVCaptureVideoOrientationPortrait];
+    [self.cameraView.layer addSublayer:previewLayer];
 }
 
 
